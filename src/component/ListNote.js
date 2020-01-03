@@ -3,11 +3,13 @@ import {Button, Text, View, ActivityIndicator, FlatList, TouchableOpacity} from 
 import {addNota, delNota, getItems} from './Utils/Networking';
 import DialogInput from 'react-native-dialog-input';
 
+global.date=[];
+
 export class DetailsScreen extends React.Component {
     state = {
         wait: true,
         loaded: false,
-        jsonArray: [{id: '', key: ''}],
+        jsonArray: [{key: '', nota: ''}],
 
 
         isDialogVisible: false,
@@ -139,7 +141,8 @@ export class DetailsScreen extends React.Component {
                     <View style={styles.buttoncontainer}>
                         <TouchableOpacity
                             style={styles.buttoncontainer}
-                            onPress={() => this.props.navigation.navigate('Harti')}>
+                            onPress={() => {
+                                this.props.navigation.navigate('Harti')}}>
                             <Text style={styles.buttontext}>Harti</Text>
                         </TouchableOpacity>
                     </View>
@@ -147,7 +150,9 @@ export class DetailsScreen extends React.Component {
                     <View style={styles.buttoncontainer}>
                         <TouchableOpacity
                             style={styles.buttoncontainer}
-                            onPress={() => this.props.navigation.navigate('Diagrama')}>
+                            onPress={() => {
+                                global.date=this.state.jsonArray;
+                                this.props.navigation.navigate('Diagrama')}}>
                             <Text style={styles.buttontext}>Diagrama</Text>
                         </TouchableOpacity>
                     </View>
