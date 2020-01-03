@@ -9,9 +9,9 @@ export async function _storeData (file,jsonobject) {
         // Error saving data
     }
 };
-export async function _retrieveData(json) {
+export async function _retrieveData(file) {
     try {
-        const value = await AsyncStorage.getItem(json);
+        const value = await AsyncStorage.getItem(file);
         if (value !== null) {
             // We have data!!
             console.log(value);
