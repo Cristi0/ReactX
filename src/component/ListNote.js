@@ -3,11 +3,12 @@ import {Button, Text, View} from 'react-native';
 
 export class DetailsScreen extends React.Component {
     render() {
+        console.log(global.tokenAplicatie);
         return (
             <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
                 <Text>Details Screen</Text>
                 <Button
-                    title="Go to Details... modific"
+                    title="Go to Details... modific "
                     onPress={() => this.props.navigation.navigate('Details')}
                 />
             </View>

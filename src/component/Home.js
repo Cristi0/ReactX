@@ -8,7 +8,7 @@ import {DetailsScreen} from './ListNote';
 
 //const serverIp = '192.168.0.105:3000';
 
-global.tokenAplicatie = undefined;
+global.tokenAplicatie = "ve";
 
 export class HomeScreen extends React.Component {
 
@@ -91,6 +91,7 @@ export class HomeScreen extends React.Component {
                         } else {
                             console.log('Content Loaded   ' + token);       //todo: transmitere token la alta clasa/pagina afisare lista item salvare locala date digrama, harti
                             _storeData('user', {user: username, pass: parola});
+                            global.tokenAplicatie = token;
                             this.props.navigation.navigate('Details');
                         }
 
