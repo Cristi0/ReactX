@@ -1,12 +1,22 @@
 import * as React from 'react';
 import {Button, Text, View, ActivityIndicator, FlatList, TouchableOpacity} from 'react-native';
-import {getItems} from './Utils/Networking';
+import {addNota, delNota, getItems} from './Utils/Networking';
+import DialogInput from 'react-native-dialog-input';
 
 export class DetailsScreen extends React.Component {
     state = {
         wait: true,
         loaded: false,
         jsonArray: [{id: '', key: ''}],
+
+
+        isDialogVisible: false,
+        dialogInput: '',
+        titludialog: '',
+        messajdialog: '',
+        hintdialog: '',
+
+        isAdd:false,
     };
 
     constructor(props) {
@@ -34,7 +44,35 @@ export class DetailsScreen extends React.Component {
             });
     }
 
+    async adauga(inputText) {
+        await addNota(global.tokenAplicatie, inputText).then((response) => response.json())
+            .then((responseJson) => {
+                var arr = this.state.jsonArray;
+                arr.push({key: responseJson._id, nota: responseJson.text});
+                this.setState({
+                    jsonArray: arr,
+                });
+            })
+            .catch((error) => {
+                console.log((error));
+            });
+    }
+    async delete(inputText) {
+        await delNota(global.tokenAplicatie,inputText)
+            .then((responseJson) => {
+                this.setState({
+                    jsonArray:  this.state.jsonArray.filter(function(json) {        //todo: de facut local storage queue
+                            return json.key !== inputText;
+                        }),
+                });
+            })
+            .catch((error) => {
+                console.log((error));
+            });
+    }
     render() {
+
+
         return (
             <>
                 <View style={styles.container}>
@@ -43,12 +81,40 @@ export class DetailsScreen extends React.Component {
                         renderItem={({item}) => <Text style={styles.item}>{item.nota}</Text>}
                     />
                 </View>
+
+
+                <DialogInput isDialogVisible={this.state.isDialogVisible}
+                             title={this.state.titludialog}
+                             message={this.state.messajdialog}
+                             hintInput ={this.state.hintdialog}
+                             submitInput={ (inputText) => {
+                                 if(this.state.isAdd){
+                                     this.adauga(inputText);
+                                 }else{
+                                     this.delete(inputText);
+                                 }
+                             } }
+                             closeDialog={ () => {this.setState({isDialogVisible:false})}}>
+                </DialogInput>
+
+
+
+
+
                 <View style={styles.container3}>
                     {this.state.loaded ? <Text></Text> : <ActivityIndicator size="large"/>}
                     <View style={styles.buttoncontainer}>
                         <TouchableOpacity
                             style={styles.buttoncontainer}
-                            onPress={() => this.props.navigation.navigate('Details')}>
+                            onPress={() => {
+                                this.setState({
+                                    isDialogVisible: true,
+                                    titludialog: 'Adaugare',
+                                    messajdialog: 'Introduceti nota',
+                                    hintdialog: 'Nota',
+                                    isAdd: true,
+                                });
+                            }}>
                             <Text style={styles.buttontext}>Adauga</Text>
                         </TouchableOpacity>
                     </View>
@@ -56,7 +122,16 @@ export class DetailsScreen extends React.Component {
                     <View style={styles.buttoncontainer}>
                         <TouchableOpacity
                             style={styles.buttoncontainer}
-                            onPress={() => this.props.navigation.navigate('Details')}>
+                            onPress={() => {
+                                this.setState({
+                                    isDialogVisible: true,
+                                    titludialog: 'Stergere',
+                                    messajdialog: 'Introduceti id-ul notei',
+                                    hintdialog: 'Id',
+                                    isAdd: false,
+                                });
+                                console.log(this.state.dialogInput);
+                            }}>
                             <Text style={styles.buttontext}>Sterge</Text>
                         </TouchableOpacity>
                     </View>
@@ -64,7 +139,7 @@ export class DetailsScreen extends React.Component {
                     <View style={styles.buttoncontainer}>
                         <TouchableOpacity
                             style={styles.buttoncontainer}
-                            onPress={() => this.props.navigation.navigate('Details')}>
+                            onPress={() => this.props.navigation.navigate('Harti')}>
                             <Text style={styles.buttontext}>Harti</Text>
                         </TouchableOpacity>
                     </View>
@@ -72,7 +147,7 @@ export class DetailsScreen extends React.Component {
                     <View style={styles.buttoncontainer}>
                         <TouchableOpacity
                             style={styles.buttoncontainer}
-                            onPress={() => this.props.navigation.navigate('Details')}>
+                            onPress={() => this.props.navigation.navigate('Diagrama')}>
                             <Text style={styles.buttontext}>Diagrama</Text>
                         </TouchableOpacity>
                     </View>

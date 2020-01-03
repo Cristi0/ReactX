@@ -2,7 +2,7 @@ import * as React from 'react';
 import {getItems} from './Utils/Networking';
 import {ActivityIndicator, FlatList, Text, TouchableOpacity, View} from 'react-native';
 
-export class DetailsScreen extends React.Component {
+export class Diagrama extends React.Component {
     state = {
         wait: true,
         loaded: false,
@@ -17,15 +17,8 @@ export class DetailsScreen extends React.Component {
     render() {
         return (
             <>
-                <View style={styles.container3}>
-                    {this.state.loaded ? <Text></Text> : <ActivityIndicator size="large"/>}
-                    <View style={styles.buttoncontainer}>
-                        <TouchableOpacity
-                            style={styles.buttoncontainer}
-                            onPress={() => this.props.navigation.navigate('Details')}>
-                            <Text style={styles.buttontext}>Adauga</Text>
-                        </TouchableOpacity>
-                    </View>
+                <View style={styles.container2}>
+                    <Text>Text</Text>
                 </View>
             </>
         );
@@ -43,6 +36,7 @@ const styles = {
         height: 44,
     },
     container2: {
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -69,8 +63,8 @@ const styles = {
         color: '#ecf0f1',
         fontSize: 20,
     },
-    divider:{
+    divider: {
         height: 10,
-    }
+    },
 
 };

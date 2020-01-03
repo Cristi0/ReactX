@@ -5,6 +5,8 @@ import {createStackNavigator} from 'react-navigation-stack';
 import {login} from './Utils/Networking';
 import {_retrieveData, _storeData} from './Utils/Local';
 import {DetailsScreen} from './ListNote';
+import {Harti} from './Harti';
+import {Diagrama} from './Diagrama';
 
 //const serverIp = '192.168.0.105:3000';
 
@@ -116,6 +118,8 @@ const RootStack = createStackNavigator(
     {
         Home: HomeScreen,
         Details: DetailsScreen,
+        Harti: Harti,
+        Diagrama: Diagrama,
     },
     {
         initialRouteName: 'Home',
