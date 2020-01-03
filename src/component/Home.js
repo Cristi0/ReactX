@@ -8,7 +8,7 @@ import {DetailsScreen} from './ListNote';
 
 //const serverIp = '192.168.0.105:3000';
 
-global.tokenAplicatie = "ve";
+global.tokenAplicatie = "";
 
 export class HomeScreen extends React.Component {
 
@@ -77,11 +77,10 @@ export class HomeScreen extends React.Component {
                         this.setState({dataSource: undefined});
                         var username = this.state.user;
                         var parola = this.state.pass;
-                        console.log('              ' + this.state.user + '   ' + this.state.pass);
+                        //console.log('              ' + this.state.user + '   ' + this.state.pass);
                         await this.login(username,parola);
                         let token = this.state.dataSource;
                         this.setState({WrongPass: token == undefined ? true : false});
-                        console.log(this.state.WrongPass);
                         this.setState({ConnectionLost: this.state.isLoading});
                         if (token==undefined) {
                             /*<View style={styles.container}>

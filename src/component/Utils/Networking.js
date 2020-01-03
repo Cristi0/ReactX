@@ -20,3 +20,15 @@ export async function login(username, password) {
         }),
     }));
 }
+
+export async function getItems(token) {
+    return await timeoutPromise(100, new Error('Timed Out!'), fetch('http://' + serverIp + '/api/item/', {
+        method: 'GET',
+        timeout: 200,
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json; charset=utf-8',
+            "Authorization": " Bearer "+token,
+        },
+    }));
+}
