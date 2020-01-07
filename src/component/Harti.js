@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {getItems} from './Utils/Networking';
 import {ActivityIndicator, FlatList, Text, TouchableOpacity, View} from 'react-native';
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
 export class Harti extends React.Component {
     state = {
@@ -16,26 +17,27 @@ export class Harti extends React.Component {
 
     render() {
         return (
-            <>
-                <View style={styles.container3}>
-                    {this.state.loaded ? <Text></Text> : <ActivityIndicator size="large"/>}
-                    <View style={styles.buttoncontainer}>
-                        <TouchableOpacity
-                            style={styles.buttoncontainer}
-                            onPress={() => this.props.navigation.navigate('Details')}>
-                            <Text style={styles.buttontext}>Adauga</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </>
+                <MapView
+                    //provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+                    style={{flex: 1}}
+                    region={{
+                        latitude: 37.78825,
+                        longitude: -122.4324,
+                        latitudeDelta: 0.015,
+                        longitudeDelta: 0.0121,
+                    }}
+                    showsUserLocation
+                />
         );
     }
 }
 
 const styles = {
     container: {
-        flex: 1,
-        paddingTop: 22,
+        height: 400,
+        width: 400,
+        justifyContent: 'flex-end',
+        alignItems: 'center',
     },
     item: {
         padding: 10,
